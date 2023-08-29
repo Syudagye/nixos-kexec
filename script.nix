@@ -22,9 +22,9 @@ let
       ];
     };
   }).config;
-
-  # This is the script that will boot NixOS with kexec
-  kexec-script = pkgs.writeScript "nixos-kexec" ''
+in
+# This is the script that will boot NixOS with kexec
+pkgs.writeScript "nixos-kexec" ''
     #!${pkgs.stdenv.shell}
     set -xe
 
@@ -40,12 +40,4 @@ let
     else
       kexec -e
     fi
-  '';
-in
-# Generate a tarball that will include the script and the whole system
-pkgs.callPackage (pkgs.path + "/nixos/lib/make-system-tarball.nix") {
-  storeContents = [
-    { object = kexec-script; symlink = "/nixos-kexec"; }
-  ];
-  contents = [ ];
-}
+  ''

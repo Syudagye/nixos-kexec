@@ -7,7 +7,8 @@
 
   outputs = { self, nixpkgs, ... } @ inputs:
     let
-      kexec = import ./.;
+      kexecTarball = import ./tarball.nix;
+      kexecScript = import ./script.nix;
     in
     {
       packages = {
@@ -16,10 +17,13 @@
             system = "x86_64-linux";
           in
           rec {
-            x86_64 = kexec {
+            script = kexecScript {
               inherit system nixpkgs;
             };
-            default = x86_64;
+            tarball = kexecTarball {
+              inherit system nixpkgs;
+            };
+            default = script;
           };
 
         aarch64-linux =
@@ -27,10 +31,13 @@
             system = "aarch64-linux";
           in
           rec {
-            aarch64 = kexec {
+            script = kexecScript {
               inherit system nixpkgs;
             };
-            default = aarch64;
+            tarball = kexecTarball {
+              inherit system nixpkgs;
+            };
+            default = script;
           };
       };
     };
