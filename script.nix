@@ -24,7 +24,7 @@ let
   }).config;
 in
 # This is the script that will boot NixOS with kexec
-pkgs.writeScript "nixos-kexec" ''
+pkgs.writeScriptBin "nixos-kexec" ''
     #!${pkgs.stdenv.shell}
     set -xe
 

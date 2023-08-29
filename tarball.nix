@@ -10,7 +10,7 @@ let
   };
 
   # Load the script
-  kexec-script = import ./script.nix;
+  kexec-script = import ./script.nix inputs;
 in
 # Generate a tarball that will include the script and the whole system
 pkgs.callPackage (pkgs.path + "/nixos/lib/make-system-tarball.nix") {
